@@ -1,3 +1,4 @@
+from re import I
 import uuid
  
 LISTA_PROJETOS = []
@@ -25,7 +26,7 @@ class Projeto():
  
 class Atividade():
  
-    def __init__(self, nome, descricao, dataini, datafim, responsavel):
+    def __init__(self, nome, descricao, dataini, datafim, responsavel, atividadecont):
         self.id = uuid.uuid4()
         self.nome = nome
         self.descricao = descricao
@@ -131,6 +132,33 @@ def sistemadepagamento():
     
     if index != -1:
         print(f'{projeto.nome} - {projeto.valor}\n')
+
+def mudarstatus():
+    nome = input('Informe o nome do projeto no qual você deseja alterar os status.')
+    index = -1
+    projeto = LISTA_PROJETOS[index]
+    for i in range(len(LISTA_PROJETOS)):
+        if LISTA_PROJETOS[i].nome == nome:
+            index = i 
+
+    if len(projeto.atividades) > 0:
+        if projeto.status ==  'Em processo de criação':
+            projeto.status == 'Iniciado'
+            print(f'O Status do projeto foi alterado para = {projeto.status}')
+            return
+        if projeto.status == 'Iniciado':
+            projeto.status == 'Em andamento'
+            print(f'O Status do projeto foi alterado para = {projeto.status}')
+            return
+        if projeto.status == 'Em andamento':
+            projeto.status == 'Concluido'
+            print(f'O Status do projeto foi alterado para = {projeto.status}')
+            return
+    else:
+        {
+            print('Não existem atividades vigentes nesse projeto.\nLogo não é possível alterar seus status.')
+        }
+
         
 def menu():
     print('Bem vindo ao sistema gerenciador de projetos')
@@ -140,6 +168,8 @@ def menu():
         print('[1] - Cadastre um novo usuário')
         print('[2] - Cadastre um nova atividade')
         print('[3] - Excluir um projeto.')
+        print('[4] - Imprimir a folha de pagamento de um Projeto.')
+        print('[5] - Alterar os status de um Projeto.')
         print('[99] - Sair')
         opt = int(input('Escolha sua opção'))
  
@@ -151,9 +181,11 @@ def menu():
         elif opt == 2:
             cadastrar_atividade()
         elif opt == 3:
-            print(e.tipo)
-        elif opt == 4:
             remover_da_lista()
+        elif opt == 4:
+            sistemadepagamento()
+        elif opt ==5:
+            mudarstatus();
         elif opt == 99:
             break
  
